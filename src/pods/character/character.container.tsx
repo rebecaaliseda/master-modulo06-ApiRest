@@ -18,11 +18,34 @@ export const CharacterContainer: React.FunctionComponent = () => {
     setCharacter(mapCharacterFromApiToVm(apiCharacter));
   };
 
+  const handleSave = async (bestSentence: string) => {
+    await api.saveCharacter({
+      id: character.id,
+      name: character.name,
+      status: character.status,
+      species: character.species,
+      gender: character.gender,
+      image: character.image,
+      origin: {
+        name: character.origin,
+      },
+      location: {
+        name: character.location,
+      },
+      bestSentence,
+    });
+
+    setCharacter({
+      ...character,
+      bestSentence,
+    });
+  };
+
   React.useEffect(() => {
     if (id) {
       handleLoadCharacter();
     }
   }, [id]);
 
-  return <CharacterComponent character={character} />;
+  return <CharacterComponent character={character} onSave={handleSave} />;
 };

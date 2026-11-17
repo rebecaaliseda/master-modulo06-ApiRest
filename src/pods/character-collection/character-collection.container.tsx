@@ -8,6 +8,8 @@ export const CharacterCollectionContainer = () => {
   const { characterCollection, loadCharacterCollection } =
     useCharacterCollection();
 
+  const [filter, setFilter] = React.useState('');
+
   const navigate = useNavigate();
 
   React.useEffect(() => {
@@ -21,6 +23,8 @@ export const CharacterCollectionContainer = () => {
   return (
     <CharacterCollectionComponent
       characterCollection={characterCollection}
+      filter={filter}
+      onFilterChange={setFilter}
       onEdit={handleSelectCharacter}
     />
   );

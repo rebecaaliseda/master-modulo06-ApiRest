@@ -3,17 +3,29 @@ import Typography from '@mui/material/Typography';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
+import TextField from '@mui/material/TextField';
+import Button from '@mui/material/Button';
 
 import { Character } from './character.vm';
 import * as classes from './character.styles';
 
 interface Props {
   character: Character;
+  onSave: (bestSentence: string) => void;
 }
 
 export const CharacterComponent: React.FunctionComponent<Props> = ({
   character,
+  onSave,
 }) => {
+  const [bestSentence, setBestSentence] = React.useState(
+    character.bestSentence
+  );
+
+  React.useEffect(() => {
+    setBestSentence(character.bestSentence);
+  }, [character]);
+
   return (
     <Card
       className={classes.root}
@@ -59,6 +71,22 @@ export const CharacterComponent: React.FunctionComponent<Props> = ({
         <Typography>
           <strong>Location:</strong> {character.location}
         </Typography>
+
+        <TextField
+          fullWidth
+          label="Best sentence"
+          value={bestSentence}
+          onChange={(e) => setBestSentence(e.target.value)}
+          sx={{ mt: 3 }}
+        />
+
+        <Button
+          variant="contained"
+          sx={{ mt: 2 }}
+          onClick={() => onSave(bestSentence)}
+        >
+          Save
+        </Button>
       </CardContent>
     </Card>
   );
